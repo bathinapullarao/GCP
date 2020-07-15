@@ -1,0 +1,60 @@
+Ref: https://qiita.com/yoshidna/items/8a12fb3a540531bcacaf
+Environment variable settings
+$ export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+$ echo $CLOUD_SDK_REPO
+cloud-sdk-bionic
+
+Add distribution URI as package source
+$ echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+deb http://packages.cloud.google.com/apt cloud-sdk-bionic main
+
+Import Google Cloud public key
+$ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+Install Cloud SDK
+$ sudo apt-get update && sudo apt-get install google-cloud-sdk
+
+Install Kubectl and python components
+$ sudo apt-get install kubectl google-cloud-sdk-app-engine-python google-cloud-sdk-app-engine-python-extras
+
+Execute gcloud init and initialize
+$ gcloud init               # Perform account verification
+
+Access your Google account, issue and paste the authentication key
+For Centos 7
+Create yum repository
+$ sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
+> [google-cloud-sdk]
+> name=Google Cloud SDK
+> baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+> enabled=1
+> gpgcheck=1
+> repo_gpgcheck=1
+> gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+>        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+> EOM
+
+SDK installation
+$ yum install -y google-cloud-sdk
+
+Install Kubectl and python components
+$ yum install -y kubectl google-cloud-sdk-app-engine-python google-cloud-sdk-app-engine-python-extras
+
+Execute gcloud init and initialize
+$ gcloud init                   # Perform account verification
+Access your Google account, issue and paste the authentication key
+Confirmation after installation
+Use the following commands to check things
+
+List of accounts where credentials are stored
+$ gcloud auth list
+
+List of valid SDK configurations
+$ gcloud config list
+
+CLoud SDK information
+$ gcloud info
+
+
+help
+$ gcloud help
